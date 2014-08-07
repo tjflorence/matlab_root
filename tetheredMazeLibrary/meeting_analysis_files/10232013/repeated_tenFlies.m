@@ -1,0 +1,282 @@
+%% go left flies 
+fly(1).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410130504_stimulusTest';
+fly(1).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410134944_stimulusTest';
+
+fly(2).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410143753_stimulusTest';
+fly(2).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410150813_stimulusTest';
+
+fly(3).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410161247_stimulusTest/';
+fly(3).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-14/20131410165257_stimulusTest/';
+
+fly(4).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-15/20131510101225_stimulusTest/';
+fly(4).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-15/20131510110517_stimulusTest/';
+
+fly(5).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-15/20131510145208_stimulusTest/';
+fly(5).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-15/20131510153114_stimulusTest/';
+
+fly(6).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-16/20131610204018_stimulusTest/';
+fly(6).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-16/20131610212518_stimulusTest/';
+
+fly(7).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-16/20131610225626_stimulusTest/';
+fly(7).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-16/20131610233853_stimulusTest/';
+
+
+%% go right flies
+fly2(1).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710105700_stimulusTest';
+fly2(1).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710112737_stimulusTest';
+
+fly2(2).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710115816_stimulusTest';
+fly2(2).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710122857_stimulusTest';
+
+fly2(3).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710131440_stimulusTest';
+fly2(3).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-17/20131710134644_stimulusTest';
+
+fly2(4).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010125507_stimulusTest';
+fly2(4).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010133613_stimulusTest';
+
+fly2(5).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010170509_stimulusTest';
+fly2(5).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010174349_stimulusTest';
+
+fly2(6).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010144630_stimulusTest';
+fly2(6).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010154102_stimulusTest';
+
+fly2(7).tr1 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010182946_stimulusTest';
+fly2(7).tr2 = '/Users/tj_florence/Desktop/current_experiments/2013-10-20/20132010190812_stimulusTest';
+
+
+
+
+%% experiment flies
+for aa = 1:7
+    
+    cd(fly(aa).tr1)
+    load('summaryVec.mat')
+    fly(aa).tr1_data = summaryVec;
+    
+    
+    cd(fly(aa).tr2)
+    load('summaryVec.mat')
+    fly(aa).tr2_data = summaryVec;    
+
+
+end
+
+
+f1 = figure('Color', 'w', 'units', 'normalized', 'position', [.1 .1 .5 .5])
+s1 = subplot(3,7,[1:2, 4:5])
+ 
+ colorSummaryMatrix = nan(7,28);
+
+for aa = 1:7
+    colorSummaryMatrix(aa,:) = [fly(aa).tr1_data fly(aa).tr2_data];
+end
+
+colorSummaryMatrix = [colorSummaryMatrix 6*ones(7,2)]
+
+imagesc(colorSummaryMatrix)
+caxis([0 6])
+axis equal off
+cMap = [255 255 255; ...
+        150 150 150; ...
+        150 150 150; ...
+        255 86  1; ...
+        1 183 255; ...
+        111 255 243;...
+        255 145 111]
+    hold on
+    
+z1 = scatter(29,2.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(6,:)./255)
+z1 = scatter(30,2.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(5,:)./255)
+
+z1 = scatter(29,3.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(7,:)./255)
+z1 = scatter(30,3.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(4,:)./255)
+text(30.5, 2.5, 'found target / chose left')
+text(30.5, 3.5, 'missed target / chose right')
+
+z1 = scatter(30,4.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(2,:)./255)
+text(30.5, 4.5, 'no choice')
+
+text(.5, 0, 'train 1-10')
+text(10.5,0, 'test 1')
+text(14.5, 0, 'train 11-20')
+text(24.5, 0, 'test 2')
+
+for aa = 1:7
+    text(-.7, aa, ['fly ' num2str(aa)])
+end
+
+for aa = 1:7
+   
+    yval = aa+.5
+
+    plot([0 28.5], [yval yval], 'Color', 'k')
+end
+text(-2, 7.5, 'cool on left', 'Rotation', 90)
+       
+colormap(flipud(cMap)./255)
+hold on
+
+s2 = subplot(7,3,[7:8,10:11])
+%% control flies
+for aa = 1:7
+    
+    cd(fly2(aa).tr1)
+    load('summaryVec.mat')
+    fly2(aa).tr1_data = summaryVec;
+    
+    
+    cd(fly2(aa).tr2)
+    load('summaryVec.mat')
+    fly2(aa).tr2_data = summaryVec;    
+ 
+
+end
+
+
+% f1 = figure('Color', 'w', 'units', 'normalized', 'position', [.1 .1 .5 .5])
+% s1 = subplot(3,3,[1:2; 4:5])
+control_colorSummaryMatrix = nan(7,30);
+
+for aa = 1:7
+    control_colorSummaryMatrix(aa,:) = [fly2(aa).tr1_data fly2(aa).tr2_data 6*ones(1,2)];
+end
+
+%control_colorSummaryMatrix = [control_colorSummaryMatrix 6*ones(7,2)]
+
+imagesc(control_colorSummaryMatrix)
+caxis([0 6])
+axis equal off
+cMap = [255 255 255; ...
+        150 150 150; ...
+        150 150 150; ...
+        255 86  1; ...
+        1 183 255; ...
+        111 255 243;...
+        255 145 111]
+    hold on
+    hold on
+    
+z1 = scatter(29,2.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(6,:)./255)
+z1 = scatter(30,2.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(5,:)./255)
+
+z1 = scatter(29,3.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(7,:)./255)
+z1 = scatter(30,3.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(4,:)./255)
+text(30.5, 2.5, 'found target / chose left')
+text(30.5, 3.5, 'missed target / chose right')
+
+z1 = scatter(30,4.5, 100);
+set(z1, 'MarkerEdgeColor', 'none', 'MarkerFaceColor', cMap(2,:)./255)
+text(30.5, 4.5, 'no choice')
+
+text(.5, 0, 'train 1-10')
+text(10.5,0, 'test 1')
+text(14.5, 0, 'train 11-20')
+text(24.5, 0, 'test 2')
+
+for aa = 1:7
+    text(-.7, aa, ['fly ' num2str(aa)])
+end
+
+for aa = 1:7
+   
+    yval = aa+.5
+
+    plot([0 28.5], [yval yval], 'Color', 'k')
+end
+
+text(-2, 7.5, 'L/R randomized', 'rotation', 90)
+           
+colormap(flipud(cMap)./255)
+hold on
+
+
+%% now plot bars etc
+s3 = subplot(3,7, 18:20)
+summaryPlotMatrix =      [.7  .5  .7 1;...
+                          .7  .75 .9 .75;...
+                          .3  .75 .9 .75;...
+                          .6  1   .7 .75;...
+                          .1  .5  .8 .5;...
+                          .5  .75 .6 .75;...
+                          .4  .5  .7 1]
+ meanPerf = nanmean(summaryPlotMatrix);
+ 
+ control_summaryPlotMatrix = [.3 1   .4 .75;...
+                              .5 .25 .9 .5;...
+                              .9 1   .6 .75;...
+                              .4 .25 .6 0;...
+                              .4 .25 .5 .25;...
+                              .6 .5  .5 1;...
+                              .2 0   .7 .25]
+                              
+ control_meanPerf = nanmean(control_summaryPlotMatrix);
+
+
+ plot([0 5], [.5 .5], 'Color', 'k')
+ expOffset = .2;
+
+ controloffSet = 0;
+
+ 
+ 
+for aa = 1:7
+    hold on
+    rando = .15+.02*randn(1);
+    
+ plot([1:1:4]-expOffset+rando, summaryPlotMatrix(aa,:), 'Color', [1 170/255 165/255], 'LineWidth', 2)
+ z1 = scatter([1:1:4]-expOffset+rando, summaryPlotMatrix(aa,:),50);
+ set(z1, 'MarkerEdgeColor', [.5 .5 .5], 'MarkerFaceColor', [1 170/255 165/255])
+end
+
+plot(meanPerf, 'Color', 'r', 'LineWidth', 8)
+
+for aa = 1:7
+    hold on
+    rando = .15+.02*randn(1);
+    
+ plot([1:1:4]-controloffSet+rando, control_summaryPlotMatrix(aa,:), 'Color', [.5 .5 .5], 'LineWidth', 2)
+ z1 = scatter([1:1:4]-controloffSet+rando, control_summaryPlotMatrix(aa,:),50);
+ set(z1, 'MarkerEdgeColor', [.5 .5 .5], 'MarkerFaceColor', [.5 .5 .5])
+end
+plot(meanPerf, 'Color', 'r', 'LineWidth', 8)
+plot(control_meanPerf, 'Color', 'k', 'LineWidth', 4)
+z1 = scatter([1:1:4], control_meanPerf,100);
+set(z1, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'k')
+
+
+
+plot(control_meanPerf, 'Color', 'k', 'LineWidth', 8)
+
+z1 = scatter([1:1:4], meanPerf,100);
+set(z1, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', [1 0 0])
+ylim([0 1])
+xlim([.5 4.5])
+ylabel('found cool spot / choose left')
+set(gca, 'XTick', [1 2 3 4], 'XTickLabel', {'train_1', 'test_1', 'train_2', 'test_2'})
+box off
+
+title('experiment summary')
+
+%sizePlot = get(s1, 'Position')
+%set(s1, 'position', [sizePlot(1) .2 sizePlot(3)*2 sizePlot(4)*2])
+
+sizePlot = get(s2, 'Position')
+set(s2, 'position', [sizePlot(1) sizePlot(2)-.03 sizePlot(3)*1.105 sizePlot(4)*1.3])
+
+sizePlot = get(s3, 'Position')
+set(s3, 'position', [sizePlot(1)-.35 sizePlot(2)+.1 sizePlot(3)*1.5 sizePlot(4)*.8])
+text(4.2,.9, 'go left (N = 7)', 'FontWeight', 'bold', 'Color', 'r')
+text(4.2,.85, 'random (N = 7)', 'FontWeight', 'bold', 'Color', 'k')
+
+
+cd('/Users/tj_florence/Documents/MATLAB/tetheredMazeLibrary/meeting_analysis_files/10232013')
+export_fig('thermal_maze_summary_40hz_newRoom')

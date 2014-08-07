@@ -1,0 +1,109 @@
+function plotDarkTurnDists(directory_1, directory_2)
+
+
+entryNum = 1;
+
+%% grab values from first experiment
+cd(directory_1)
+dataFiles = dir('env*');
+numFiles = length(dataFiles);
+for aa = 1:numFiles
+
+    load(dataFiles(aa).name)    
+    
+    [n,xout] = histc(data.dTheta_dark, linspace(-.3,.3, 41));
+    n = n/data.count;
+    
+    collectedDataStruct(entryNum).dTheta_dark = n;
+    
+    entryNum = entryNum+1;
+end
+
+%% grab values from second experiment
+cd(directory_2)
+dataFiles = dir('env*');
+numFiles = length(dataFiles);
+for aa = 1:numFiles
+
+    load(dataFiles(aa).name)    
+    
+    [n,xout] = histc(data.dTheta_dark, linspace(-.3,.3, 41));
+    n = n/data.count;
+    
+    collectedDataStruct(entryNum).dTheta_dark = n;
+
+    entryNum = entryNum+1;
+    
+end
+
+%% plot distributions in 3d
+% x = trial number
+% y = distribution position
+% z = distribution height
+
+f1 = figure('Color', 'w', 'units', 'normalized', 'Position', [.3 .3 .3 .6]);
+%s1 = subplot(2,1,1);
+%for aa = 1:entryNum-1
+   
+%    xPoints = aa*ones(1, length(collectedDataStruct(aa).dTheta_dark));
+%    yPoints = linspace(-.3,.3, 41);
+%    zPoints = collectedDataStruct(aa).dTheta_dark;
+    
+%    plot3(xPoints, yPoints, zPoints)
+%    xlabel('trial number')
+%    ylabel('delta Theta')
+%    zlabel('normalized counts')
+    
+%    hold on
+    
+%end
+
+%% make a heat map
+%s2 = subplot(2,1,2)
+hold off
+heatMap = [];
+for aa = 1:entryNum-1
+   
+    heatMap = [heatMap; collectedDataStruct(aa).dTheta_dark;]
+    
+    hold on
+    
+end 
+imagesc(fliplr(heatMap))
+box off
+
+for aa = 1:entryNum-1
+   
+    plot([-100 100], [aa+.5 aa+.5], 'k:')
+    
+end 
+
+set(gca, 'YDir', 'normal')
+colormap(pmkmp);
+c1 = colorbar();
+caxis([0 .3])
+set(c1, 'YTickLabel', {'0   ' '0.05   ', '0.1   ', '0.15   ', '0.2   ', '0.25   '})
+set(get(c1 ,'YLabel'), 'String', 'normalized counts', 'Rotation', -90)
+xlim([.5 40.5])
+ylim([.5 28.5])
+
+hold on
+plot([-100 100], [10.5 10.5],'k', 'Linewidth', 2)
+plot([-100 100], [14.5 14.5], 'k', 'Linewidth', 2)
+
+plot([-100 100], [24.5 24.5], 'k', 'Linewidth', 2)
+plot([-100 100], [28.5 28.5], 'k', 'Linewidth', 2)
+
+
+set(gca, 'XTick', [1 21 40],  'XTickLabel', {'-0.3' '0 '  '+0.3'})
+
+xlabel('turn magnitude')
+ylabel('trial number')
+
+title('turn distribution in dark')
+
+%% print figure
+cd(directory_2)
+mkdir('pre_trial_data')
+cd('pre_trial_data')
+export_fig('dark_all_trials', '-png')

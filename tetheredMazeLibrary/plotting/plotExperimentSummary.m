@@ -1,0 +1,211 @@
+function plotExperimentSummary(directory)
+
+    
+%% step 1: go to file directory, collect file names
+    cd(directory)
+    homeDir = pwd;
+    
+    infoFile = dir('*info*');
+    load(infoFile.name)
+    
+    lastInd = strfind(infoFile.name, '-info_file.mat');
+    strName = infoFile.name(1:lastInd-1)
+    
+    
+    try
+        rawFiles = dir('*RAW*');
+        delete(rawFiles.name)
+    catch
+        disp('no raw files') 
+    end
+
+
+    % collect file names
+    allTrials = dir('env*');
+    num_allTrials = length(allTrials);
+    
+    env1_files = dir('env1*');
+    num_env1 = length(env1_files);
+    
+    env2_files = dir('env2*');
+    num_env2 = length(env2_files);
+
+    env3_files = dir('env3*');
+    num_env3 = length(env3_files);
+
+    env4_files = dir('env4*');
+    num_env4 = length(env4_files);
+
+    env5_files = dir('env5*');
+    num_env5 = length(env5_files);
+
+    env6_files = dir('env6*');
+    num_env6 = length(env6_files);
+    
+    % determine the maximum number of env repetitions for the set of envs
+    numVec = [num_env1 num_env2 num_env3 num_env4 num_env5 num_env6];
+    maxTrialNum = max(numVec);
+    
+    % ready folder for printing fig
+    mkdir('experiment_summary')
+    cd('experiment_summary')
+    printDir = pwd;
+    
+    
+    f1 = figure('Color', 'w', 'Units', 'normalized','Position', [.01 .01 .9 .9]);
+    
+    for aa = 1:num_env1
+        cd(homeDir)
+        
+        h1 = subplot(6,maxTrialNum, aa ); 
+        load(env1_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off
+        axes(h1)
+        
+        if aa == 1
+            
+           annotation('textbox', [.1 .9 .1 .1], 'String', strName, 'interpreter', 'none'); 
+            
+           arrow([5500 -175 ],[ 12000 -175],36,'BaseAngle',60, 'LineWidth', 3) 
+           text(5500, -400, 'repetitions', 'FontSize', 20)
+           
+           arrow([-1100 5000  ],[-1100 10000 ],36,'BaseAngle',60, 'LineWidth', 3) 
+           text(-1325, 7500, 'distance from start', 'FontSize', 20, 'Rotation', 90)
+           
+           plot([0 10000], [-20 -20], 'color', 'k', 'LineWidth', 4)
+
+        end
+        arrow fixlimits
+        
+
+        
+    end
+    
+    annotation('line', [.15 .9], [1-.2 1-.2] , 'Color', [0 0 0], 'LineWidth', 2)
+    annotation('textbox', [.87 1-.27 .1 .1], 'String', '120 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+    drawnow
+    
+    for aa = 1:num_env2
+        cd(homeDir)
+
+        
+        h1 = subplot(6,maxTrialNum, aa+maxTrialNum );
+        load(env2_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off
+        axis(axis)
+        
+        
+    end
+    
+    annotation('line', [.15 .9], [1-.337 1-.337] , 'Color', [0 0 0], 'LineWidth', 2)
+    annotation('textbox', [.87 1-.407 .1 .1], 'String', '120 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+    drawnow
+
+    for aa = 1:num_env3
+        cd(homeDir)
+       
+        h1 = subplot(6,maxTrialNum, aa+(2*maxTrialNum) ); 
+        load(env3_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off
+        
+    end
+    
+     annotation('line', [.15 .9], [1-0.48 1-0.48] , 'Color', [0 0 0], 'LineWidth', 2)
+     annotation('textbox', [.87 1-0.5400 .1 .1], 'String', '180 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+     drawnow
+    
+    for aa = 1:num_env4
+        cd(homeDir)
+       
+        h1 = subplot(6,maxTrialNum, aa+(3*maxTrialNum) ); 
+        load(env4_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off
+        
+    end
+ 
+     annotation('line', [.15 .9], [1-0.625 1-0.625] , 'Color', [0 0 0], 'LineWidth', 2)
+     annotation('textbox', [.87 1-0.6950 .1 .1], 'String', '300 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+     drawnow
+         
+    for aa = 1:num_env5
+        cd(homeDir)
+       
+        h1 = subplot(6,maxTrialNum, aa+(4*maxTrialNum) ); 
+        load(env5_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off   
+        
+    end 
+    
+    annotation('line', [.15 .9], [1-0.77 1-0.77] , 'Color', [0 0 0], 'LineWidth', 2)
+    annotation('textbox', [.87 1-0.84 .1 .1], 'String', '300 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+    drawnow
+     
+    for aa = 1:num_env6
+        cd(homeDir)
+       
+        h1 = subplot(6,maxTrialNum, aa+(5*maxTrialNum) ); 
+        load(env6_files(aa).name)
+        
+        imagesc(data.tempEnv)
+        colormap(gray)
+        hold on
+        plot(data.Xpos, data.Ypos, 'Color', 'w', 'LineWidth', 3);
+        plot(data.Xpos, data.Ypos, 'Color', 'r', 'LineWidth', 2.5);
+        circle([length(data.tempEnv)/2 length(data.tempEnv)/2],length(data.tempEnv)/2,1000,'k',5)
+        axis equal off
+        
+       if aa == 1
+            
+            
+
+           text(-1100, 1200, 'TEST ', 'FontSize', 20, 'Rotation', 90)
+           
+ 
+
+        end
+    end
+    
+    annotation('line', [.15 .9], [1-0.915 1-0.915] , 'Color', [0 0 0], 'LineWidth', 2)
+    annotation('textbox', [.87 1-0.985 .1 .1], 'String', '300 sec', 'interpreter', 'none', 'EdgeColor', [1 1 1], 'FontSize', 15); 
+    drawnow
+
+    
+    cd(printDir)
+    export_fig('experiment_summary', '-pdf')
+    
+end
