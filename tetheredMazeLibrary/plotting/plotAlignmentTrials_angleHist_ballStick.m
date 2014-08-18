@@ -17,7 +17,7 @@ numFiles = length(alignmentTrialsToPlot);
 for aa = 1:numFiles
 
     load(alignmentTrialsToPlot(aa).name)
-    f1 = figure('Color', 'w', 'units', 'normalized', 'Position', [.01 .01 .8 .4]);
+    f1 = figure('Color', 'w', 'units', 'normalized', 'Position', [.01 .01 .6 .3]);
     
     s1 = subplot(2,4,[1:2, 5:6])
     sizePlot = get(s1, 'Position')

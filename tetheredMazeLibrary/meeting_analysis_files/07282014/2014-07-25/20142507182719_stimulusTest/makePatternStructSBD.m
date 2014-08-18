@@ -1,5 +1,5 @@
 
-function [init, patternStruct, binVals] = makePatternStruct
+function [init, patternStruct, binVals] = makePatternStructSBD_id
 %% makes structure containing patterns for visual discrim / virtual place learning
 % can code up to 8 patterns
 % experiment outputs pattern nums 0-7

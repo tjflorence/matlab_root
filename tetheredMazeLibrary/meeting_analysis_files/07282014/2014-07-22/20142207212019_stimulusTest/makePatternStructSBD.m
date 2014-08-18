@@ -24,10 +24,10 @@ patternStruct(1).pat    = darkPattern;
 patternStruct(1).name   = 'dark';
 
 % creates vertical line pattern
-vertLine                = ones(32,96);
-vertLine(:,1:4)         = 0;
-vertLine(:,93:96)       = 0;
-vertLine(:,45:52)       = 0;
+vertLine                = zeros(32,96);
+vertLine(:,1:4)         = 1;
+vertLine(:,93:96)       = 1;
+vertLine(:,45:52)       = 200;
 patternStruct(2).pat    = vertLine;
 patternStruct(2).name   = 'vertical line';
 
