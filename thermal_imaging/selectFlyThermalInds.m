@@ -1,4 +1,6 @@
 function selectFlyThermalInds(thermalCam)
+
+
 disp('time to label those pixels! woo WOO')
 metaData.thermCalc = [.0051 -75.5];
 
@@ -21,6 +23,9 @@ numDiffInds = length(diffInds);
 
 save('C:\thermal_data\diffInds', 'diffInds', 'numDiffInds')
 disp('pixel indices acquired and saved')
+
+close all
+
 
 
 
