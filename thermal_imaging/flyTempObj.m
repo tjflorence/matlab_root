@@ -1,5 +1,5 @@
 classdef flyTempObj
-   %% fly thermal object class
+   %flyTempObj 
    % simplifies tracking of thermal properites for thermal control
    % to add: loading data back into object; would simplify plotting
    
