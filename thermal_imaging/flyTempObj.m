@@ -143,12 +143,8 @@ classdef flyTempObj
             %% 
             if obj.current_stemp(obj.p) == obj.setTemps(1)
             
-                if obj.current_error > 5
-                    output = [-4.99 0]; %% if error positive, cool off!
-                else
-                    output = [-4.99 5];
-                end
-                
+                  output = [-4.99 0]; %% if error positive, cool off!
+
             elseif obj.current_stemp(obj.p) == obj.setTemps(2)
                 output = [-3.3 5];
                 

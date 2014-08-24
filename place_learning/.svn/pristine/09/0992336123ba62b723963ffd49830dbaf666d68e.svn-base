@@ -1,0 +1,35 @@
+serial_port_for_Agilent_Power = 'com7';
+serial_port_for_Oven_Controller1 = 'com10';
+serial_port_for_Oven_controller2 = 'com11';
+serial_port_for_Oven_controller3 = 'com9';
+serial_port_for_Oven_controller4 = 'com8';
+
+%PID setting for base temperature control
+pid4base_windup_guard = 30;
+pid4base_proportional_gain = 100;
+pid4base_integral_gain = 1;
+pid4base_derivative_gain = 5;
+
+%power supply voltage out for the base
+basePowerVolt_quickHeating = 30;
+% basePowerVolt_slowUp = 6.5;
+% basePowerVolt_quickDown = 0;
+% basePowerVolt_slowDown = 1;
+
+%power supply voltage out for the wall
+wallPowerVolt_quickHeating = 25;
+wallPowerVolt_slowHeating = 10;
+wallPowerVolt_quickCooling = 0;
+wallPowerVolt_slowCooling = 7.5;
+
+%settings of the camera
+frameRate = 25;
+
+%Directory 
+biasFile = 'C:\Users\labadmin\Documents\MATLAB\bias_test_gui_v043\bias_gui.exe';
+expDataRootDir = 'C:\PlaceLearningData';
+expProtocolDir = 'C:\PlaceLearningData\Experimental_Protocols';
+defaultProtocol = 'C:\PlaceLearningData\Experimental_Protocols\StandardPlaceLearningProtocol.mat';
+
+
+

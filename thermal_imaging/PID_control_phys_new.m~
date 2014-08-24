@@ -36,10 +36,7 @@ isStarted = 0;
 
 %% create camera and daq object
 % first, thermal cam
-if doCamAcq == 0
-    thermalCam = videoinput('gige');
-end
-
+thermalCam = videoinput('gige');
 % second, daq obj
 daqObj = daq.createSession('ni');
 daqObj.addAnalogInputChannel('Dev1', [0], 'Voltage');
@@ -57,7 +54,7 @@ thermalObj = flyTempObj();
 disp('waiting for signal from other matlab')
 while digital_0 == 0
 
-    daqObj.outputSingleScan([-4.99 0 0 0])
+    daqObj.outputSingleScan([-4.99 0])
     daqOut = daqObj.inputSingleScan;
     digital_0 = daqOut(2);
     digital_1 = daqOut(3);
@@ -66,7 +63,7 @@ while digital_0 == 0
 end
 
 %% before starting everything, 
-daqObj.outputSingleScan([-3.5 5 0 0])
+daqObj.outputSingleScan([-3.5 5])
 disp('run thermal experiment')
 startTime = tic;
 
@@ -92,7 +89,7 @@ while digital_0 == 1
         resetTrail = 1;
     
         % if we haven't acquired the correct pixel inds, do so now
-        if digital_2 == 0 && runGetInds == 0 && doCamAcq == 0
+        if digital_2 == 0 && runGetInds == 0
             selectFlyThermalInds(thermalCam);
             pause(.1)
             load('C:\thermal_data\diffInds.mat')
@@ -100,7 +97,7 @@ while digital_0 == 1
         end   
         
         % start thermal camera if it isn't started
-        if isStarted == 0 && doCamAcq == 0
+        if isStarted == 0
             start(thermalCam)
             isStarted = 1;
         end
@@ -141,10 +138,7 @@ while digital_0 == 1
     end
     
     if resetTrial == 1
-        if doCamAcq == 0
-            stop(thermalCam)
-        end
-        
+        stop(thermalCam)
         isStarted   = 0;
         runGetInds  = 0;
         
@@ -172,16 +166,13 @@ while digital_0 == 1
         resetTrial = 0;
     end
     
-    % in between experiments, stop camera acq!
+    
     daqObj.outputSingleScan([-3.5 5 0 5])
 
     
 end
 
-daqObj.outputSingleScan([-4.99 0 0 0])
-
-if doCamAcq == 0
-    stop(thermalCam)
-end
+daqObj.outputSingleScan([-4.99])
+stop(thermalCam)
 
 cd('C:\')
